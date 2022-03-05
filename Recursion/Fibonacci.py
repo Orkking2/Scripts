@@ -1,5 +1,3 @@
-steps = 100
-
 def main (step):
     if step == 1:
         k = 1
@@ -9,4 +7,4 @@ def main (step):
         k = main(step-1) + main(step-2)
     return(k)
 
-print(main(steps))
+print(main(100))
