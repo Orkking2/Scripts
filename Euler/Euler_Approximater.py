@@ -22,7 +22,7 @@ def Choose ():
         Choose()
         return([N,H])
 
-def main(X,Y):
+def Approximater(X,Y):
     NH = Choose()
     N = NH[0]
     H = NH[1]
@@ -35,4 +35,4 @@ def main(X,Y):
             Y = Y + K
         print(Y)
 
-main(X,Y)
+Approximater(X,Y)
