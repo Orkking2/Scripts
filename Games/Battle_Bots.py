@@ -1,11 +1,21 @@
-life = True
+from random import *
+
+life = True 
+
+def dice ():
+    return(randint(1,6))
+
 class player:
-    def __init__(self, handicap, health, attack):
+    def __init__(self, handicap):
        self.handicap = handicap
-       self.health = health + 10*handicap
-       self.attack = attack + handicap
-    def ai (self, level):
-        pass
+       self.health = 100 + 10*handicap*dice()
+       self.effective_health = self.health
+       self.attack = 25 + 5*handicap*dice()
+       self.armour = 50 + handicap*dice()
+    def takeDamage (self, opponent):
+        self.health = self.health - opponent.attack
+    def defend (self):
+        self.effective_health = self.health + self.armour*dice()
 
 def handicap_questions ():
     handicap_switch = input("Would you like a handicap? ")
@@ -17,19 +27,27 @@ def handicap_questions ():
         handicap = 0
         return(handicap)
 
-def init ():
-    handicap = handicap_questions()
-    human = player(handicap, 100, 5)
-    ai_level = int(input("What level would you like your opponent to be? (1-5) ")) % 6
-    bot = player(ai_level,100,5)
-    return(handicap,human,ai_level,bot)
+#def init ():
+human_handicap = handicap_questions()
+human = player(human_handicap)
+bot_handicap = int(input("What level would you like your opponent to be? (1-5) ")) % 6
+bot = player(bot_handicap)
+    #return(handicap_human,human,handicap_bot,bot)
 
+def action_roll ():
+    if dice() > 3:
+        return(True)
+    else:
+        return(False)
 
-def ai_bias (level,opponent_hp,opponent_attack):
+def ai_bias (level):
     if level == 0:
         return()
     elif level == 1:
-        pass
+        if action_roll():
+            human.takeDamage(bot)
+        else:
+            return()
     elif level == 2:
         pass
     elif level == 3:
@@ -40,6 +58,6 @@ def ai_bias (level,opponent_hp,opponent_attack):
         pass
 
 def game ():
-    handicap, human, ai_level, bot = init()
+    handicap_human, human, handicap_bot, bot = init()
     while life:
         return()
