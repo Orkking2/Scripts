@@ -11,9 +11,9 @@ class player:
        self.attack = 25 + 5*handicap*dice()
        self.armour = 50 + handicap*dice()
     def takeDamage (self, opponent_attack):
-        self.health = self.health - opponent_attack
+        self.effective_health = self.effective_health - opponent_attack
     def defend (self):
-        self.effective_health = self.health + self.armour*dice()
+        self.effective_health = self.effective_health + self.armour*dice()
 
 def handicap_questions ():
     handicap_switch = input("Would you like a handicap? ")
@@ -25,12 +25,12 @@ def handicap_questions ():
         handicap = 0
         return(handicap)
 
-#def initialization ():
-human_handicap = handicap_questions()
-human = player(human_handicap)
-bot_handicap = int(input("What level would you like your opponent to be? (1-5) ")) % 6
-bot = player(bot_handicap)
-check_life()
+def initialization ():
+    human_handicap = handicap_questions()
+    human = player(human_handicap)
+    bot_handicap = int(input("What level would you like your opponent to be? (1-5) ")) % 6
+    bot = player(bot_handicap)
+    check_life()
 
 def action_roll ():
     if dice() > 3:
@@ -41,12 +41,14 @@ def action_roll ():
 def check_life ():
     if human.health <= 0:
         life = False
+        winner = False
     elif bot.health <= 0:
         life = False
+        winner = True
     else:
-        pass
+        life = True
 
-def ai_bias (level):
+def bot_action (level):
     if level == 0:
         pass
     elif level == 1:
@@ -55,15 +57,61 @@ def ai_bias (level):
         else:
             pass
     elif level == 2:
-        pass
+        if action_roll():
+            human.takeDamage(bot.attack)
+        elif action_roll():
+            bot.defend()
+        else:
+            pass
     elif level == 3:
-        pass
+        for i in range(dice()):
+            if action_roll():
+                human.takeDamage(bot.attack)
+            elif action_roll():
+                bot.defend()
+            else:
+                pass
     elif level == 4:
-        pass
+        for i in range(dice()):
+            if action_roll():
+                human.takeDamage(bot.attack)
+            else:
+                bot.defend()
     elif level == 5:
+        for i in range(100**dice()):
+            if action_roll():
+                human.takeDamage(bot.attack)
+            else:
+                bot.defend()
+
+def human_action():
+    action = input("Would like to attack, defend, or do nothing? (a/d/n) ")
+    action.lower()
+    if action == 'a':
+        bot.takeDamage(human.attack)
+    elif action == 'd':
+        human.defend
+    else:
         pass
 
 def game ():
+    for i in range(10):
+        print('\n')
     initialization()
     while life:
-        return()
+        bot_action()
+        check_life()
+        human_action()
+        check_life()
+    if winner:
+        print("Congratulations on beating a level " + bot_handicap + " bot!")
+    else:
+        print("You lost this time but there is always tomorrow after today, try your luck again!")
+    play_again = input("\n"+ "Would you like to play again? (y/n) ")
+    play_again.lower()
+    if play_again == 'y':
+        game()
+    else:
+        print("Oh alright then, have a good day now, y'hear!")
+
+game()
