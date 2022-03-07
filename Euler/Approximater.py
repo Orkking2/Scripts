@@ -30,7 +30,7 @@ def Approximater():
     if abs(X-TargetX+H)>abs(X-TargetX):
         print("DIVERGENT")
     else:
-        for n in range(1,N+1):
+        for i in range(1,N+1):
             K = m(X,Y)*H
             X = X + H
             Y = Y + K
