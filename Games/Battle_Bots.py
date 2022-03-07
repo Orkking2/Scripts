@@ -1,7 +1,5 @@
 from random import *
 
-life = True 
-
 def dice ():
     return(randint(1,6))
 
@@ -12,8 +10,8 @@ class player:
        self.effective_health = self.health
        self.attack = 25 + 5*handicap*dice()
        self.armour = 50 + handicap*dice()
-    def takeDamage (self, opponent):
-        self.health = self.health - opponent.attack
+    def takeDamage (self, opponent_attack):
+        self.health = self.health - opponent_attack
     def defend (self):
         self.effective_health = self.health + self.armour*dice()
 
@@ -27,12 +25,12 @@ def handicap_questions ():
         handicap = 0
         return(handicap)
 
-#def init ():
+#def initialization ():
 human_handicap = handicap_questions()
 human = player(human_handicap)
 bot_handicap = int(input("What level would you like your opponent to be? (1-5) ")) % 6
 bot = player(bot_handicap)
-    #return(handicap_human,human,handicap_bot,bot)
+check_life()
 
 def action_roll ():
     if dice() > 3:
@@ -40,14 +38,22 @@ def action_roll ():
     else:
         return(False)
 
+def check_life ():
+    if human.health <= 0:
+        life = False
+    elif bot.health <= 0:
+        life = False
+    else:
+        pass
+
 def ai_bias (level):
     if level == 0:
-        return()
+        pass
     elif level == 1:
         if action_roll():
-            human.takeDamage(bot)
+            human.takeDamage(bot.attack)
         else:
-            return()
+            pass
     elif level == 2:
         pass
     elif level == 3:
@@ -58,6 +64,6 @@ def ai_bias (level):
         pass
 
 def game ():
-    handicap_human, human, handicap_bot, bot = init()
+    initialization()
     while life:
         return()
