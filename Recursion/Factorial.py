@@ -1,7 +1,9 @@
-def main (step):
+Num = int(input('\n'+"What number would you like the Factorial of (n!) n = "))
+
+def Factorial (step):
     if step == 1:
         return(1)
     else:
-        return(step*main(step-1))
+        return(step*Factorial(step-1))
 
-print(main(10))
+print('\n'+str(Factorial(Num)))
