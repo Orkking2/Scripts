@@ -8,8 +8,8 @@ YMin = -10
 XMax = 10
 XMin = -10
 
-D = [50,50]
-D = [D[0],D[1],D[0]*D[1]] # x, y, x*y
+D = [50,50] # x, y, x*y
+D.append(D[0]*D[1]) 
 
 MatrixXY = Matrix_Generator(XMin,XMax,YMax,YMin,D)
 
