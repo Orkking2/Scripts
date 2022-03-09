@@ -25,9 +25,9 @@ for i in range(D[2]):
 MasterXY = Matrix(MasterX,MasterY)
 
 for i in range(D[2]):
-    plt.plot(MasterXY.x,MasterXY.y)
-# plt.show()
+    plt.plot(MasterXY.x[i],MasterXY.y[i])
+plt.show()
 
-print(k)
+
 
 ## Soon TM
