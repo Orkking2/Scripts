@@ -25,7 +25,7 @@ for i in range(D[2]):
 
 MasterXY = Matrix(MasterX,MasterY)
 
-plt.figure(figsize=(10,10), facecolor='grey')
+plt.figure(figsize=(8,8), facecolor='grey')
 plt.rcParams.update({'axes.facecolor':'black'})
 plt.subplots_adjust(left=0.04,bottom=0.04,right=0.99,top=0.99)
 
