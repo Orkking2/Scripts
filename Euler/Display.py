@@ -34,8 +34,8 @@ for i in range(D[2]):
     plt.plot(MasterXY.x[i],MasterXY.y[i], color='grey')
 
 if input("Would you like an Euler approximation? (y/n) ").lower() == 'y':
-    Approximater()
-    
+    X, Y = Approximater()
+    plt.plot(X,Y)
 else:
     pass
 
