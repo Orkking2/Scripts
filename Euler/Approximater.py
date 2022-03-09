@@ -6,7 +6,7 @@ def questions ():
 
 ## k = dy/dx
 def m (x,y):
-    k = y
+    k = y**4 + x*y -2*x**3 - y*x - 7
     return(k)
 
 def Choose (TargetX,X):

@@ -2,18 +2,19 @@ from Approximater import *
 from Matrix import *
 import matplotlib.pyplot as plt
 
-YMax = 1
-YMin = -1
-XMax = 1
-XMin = -1
+YMax = 2
+YMin = -2
+XMax = 2
+XMin = -2
 
-D = [2,3,D[0]*D[1]] # x, y
+D = [50,50]
+D = [D[0],D[1],D[0]*D[1]] # x, y, x*y
 
 MatrixXY = Matrix_Generator(XMin,XMax,YMax,YMin,D)
 
 r = min((XMax-XMin)/(2*(D[0]-1)),(YMax-YMin)/(2*(D[1]-1)))*0.9
 
-k = [r/((m(MatrixXY.x[x],MatrixXY.y[x])**2 + 1)**(1/2)) for x in range(D[2])]
+k = [r/((m(MatrixXY.x[i],MatrixXY.y[i])**2 + 1)**(1/2)) for i in range(D[2])]
 
 MasterX = []
 MasterY = []
@@ -24,10 +25,34 @@ for i in range(D[2]):
 
 MasterXY = Matrix(MasterX,MasterY)
 
+plt.figure(figsize=(6,6))
+
+plt.xlabel('X')
+plt.ylabel('Y')
+
+
+
 for i in range(D[2]):
-    plt.plot(MasterXY.x[i],MasterXY.y[i])
+    plt.plot(MasterXY.x[i],MasterXY.y[i], color='white')
+
+Kx = (XMax - XMin)/(6*D[0])
+Ky = (YMax - YMin)/(6*D[1])
+
+YBoundsUpper1 = max([m(MatrixXY.x[i],YMax)*k[i] for i in range(D[2] - D[0] + 1, D[2])])
+YBoundsUpper2 = max([m(MatrixXY.x[i],YMax)*(-k[i]) for i in range(D[2] - D[0] + 1, D[2])])
+
+YBoundsUpper = max(YBoundsUpper1, YBoundsUpper2) + YMax + Ky
+
+YBoundsLower1 = min([m(MatrixXY.x[i],YMin)*k[i] for i in range(1, D[1])])
+YBoundsLower2 = min([m(MatrixXY.x[i],YMin)*(-k[i]) for i in range(1, D[1])])
+
+YBoundsLower = min(YBoundsLower1, YBoundsLower2) + YMin - Ky
+
+YBounds = [YBoundsLower, YBoundsUpper]
+
+XBounds = [min([MatrixXY.x[i] - k[i] for i in range(D[2])]) - Kx, max([MatrixXY.x[i] + k[i] for i in range(D[2])]) + Kx]
+
+plt.xlim(XBounds)
+plt.ylim(YBounds)
+
 plt.show()
-
-
-
-## Soon TM
