@@ -1,12 +1,12 @@
 def questions ():
-    X = int(input("Start X: ")) ## Initial X -> inc'd X
-    Y = int(input("Start Y: ")) ## Initial Y -> inc'd Y
+    X = [int(input("Start X: "))] ## Initial X -> inc'd X
+    Y = [int(input("Start Y: "))] ## Initial Y -> inc'd Y
     TargetX = int(input("Target X: "))
     return(X,Y,TargetX)
 
 ## k = dy/dx
 def m (x,y):
-    k = y**4 + x*y -2*x**3 - y*x - 7
+    k = y
     return(k)
 
 def Choose (TargetX,X):
@@ -26,12 +26,13 @@ def Choose (TargetX,X):
 
 def Approximater():
     X,Y,TargetX = questions()
-    N,H = Choose(TargetX,X)
-    if abs(X-TargetX+H)>abs(X-TargetX):
+    N,H = Choose(TargetX,X[0])
+    K = []
+    if abs(X[0]-TargetX+H)>abs(X[0]-TargetX):
         print("DIVERGENT")
     else:
-        for i in range(1,N+1):
-            K = m(X,Y)*H
-            X = X + H
-            Y = Y + K
-        print(Y)
+        for i in range(N):
+            K.append(m(X[i],Y[i])*H)
+            X.append(X[i] + H)
+            Y.append(Y[i] + K[i])
+        return(X,Y)

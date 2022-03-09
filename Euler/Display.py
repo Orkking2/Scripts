@@ -33,6 +33,12 @@ plt.subplots_adjust(left=0.04,bottom=0.04,right=0.99,top=0.99)
 for i in range(D[2]):
     plt.plot(MasterXY.x[i],MasterXY.y[i], color='grey')
 
+if input("Would you like an Euler approximation? (y/n) ").lower() == 'y':
+    Approximater()
+    
+else:
+    pass
+
 Kx = (XMax - XMin)/(6*D[0])
 Ky = (YMax - YMin)/(6*D[1])
 
