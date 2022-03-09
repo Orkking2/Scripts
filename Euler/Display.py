@@ -25,12 +25,8 @@ for i in range(D[2]):
 
 MasterXY = Matrix(MasterX,MasterY)
 
-plt.figure(figsize=(6,6))
-
-plt.xlabel('X')
-plt.ylabel('Y')
-
-
+plt.figure(figsize=(10,10), facecolor='grey')
+plt.rcParams.update({'axes.facecolor':'black'})
 
 for i in range(D[2]):
     plt.plot(MasterXY.x[i],MasterXY.y[i], color='white')
