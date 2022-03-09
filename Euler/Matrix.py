@@ -29,9 +29,9 @@ def Matrix_Generator (XMax,XMin,YMax,YMin,D):
     XList = []
     YList = []
 
-    for x in range(1,D[2]+1):
-        XList.append(MatrixX[(x - 1) % D[0]])
-        YList.append(MatrixY[floor((x - 1)/D[0])])
+    for i in range(1,D[2]+1):
+        XList.append(MatrixX[(i - 1) % D[0]])
+        YList.append(MatrixY[floor((i - 1)/D[0])])
 
     MatrixXY = Matrix(XList,YList)
 
