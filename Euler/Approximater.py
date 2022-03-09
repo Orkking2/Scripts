@@ -35,6 +35,3 @@ def Approximater():
             X = X + H
             Y = Y + K
         print(Y)
-
-
-Approximater()
