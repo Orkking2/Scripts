@@ -13,6 +13,8 @@ def Matrix_Generator (XMax,XMin,YMax,YMin,D):
     XDist = XMax - XMin
     YDist = YMax - YMin
 
+    D = [D[0],D[1],D[0]*D[1]]
+
     XSpacing = XDist/(D[0]-1)
     YSpacing = YDist/(D[1]-1)
 
