@@ -27,9 +27,11 @@ MasterXY = Matrix(MasterX,MasterY)
 
 plt.figure(figsize=(10,10), facecolor='grey')
 plt.rcParams.update({'axes.facecolor':'black'})
+plt.subplots_adjust(left=0.04,bottom=0.04,right=0.99,top=0.99)
+
 
 for i in range(D[2]):
-    plt.plot(MasterXY.x[i],MasterXY.y[i], color='white')
+    plt.plot(MasterXY.x[i],MasterXY.y[i], color='grey')
 
 Kx = (XMax - XMin)/(6*D[0])
 Ky = (YMax - YMin)/(6*D[1])
