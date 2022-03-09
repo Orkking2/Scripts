@@ -3,14 +3,10 @@ from Matrix import *
 import matplotlib.pyplot as plt
 
 
-def m (x,y):
-    k = y
-    return(k)
-
-YMax = 2
-YMin = -2
-XMax = 2
-XMin = -2
+YMax = 10
+YMin = -10
+XMax = 10
+XMin = -10
 
 D = [50,50]
 D = [D[0],D[1],D[0]*D[1]] # x, y, x*y
@@ -32,7 +28,8 @@ MasterXY = Matrix(MasterX,MasterY)
 
 plt.figure(figsize=(8,8), facecolor='grey')
 plt.rcParams.update({'axes.facecolor':'black'})
-plt.subplots_adjust(left=0.04,bottom=0.04,right=0.99,top=0.99)
+border = max(len(str(YMax)), len(str(YMin)))/100 + 0.03
+plt.subplots_adjust(left=border,bottom=border,right=0.99,top=0.99)
 
 for i in range(D[2]):
     plt.plot(MasterXY.x[i],MasterXY.y[i], color='grey')
@@ -44,7 +41,7 @@ if input("Would you like an Euler approximation? (y/n) ").lower() == 'y':
     elif max(Y) > YMax or min(Y) < YMin:
         print("Y out of bounds")
     plt.plot(X,Y, color='green', linewidth=2.5)
-    print("Final Y is " + str(Y[len(Y)]))
+    print("Final Y is " + str(Y[len(Y) - 1]))
 else:
     pass
 
@@ -68,7 +65,7 @@ XBounds = [min([MatrixXY.x[i] - k[i] for i in range(D[2])]) - Kx, max([MatrixXY.
 plt.xlim(XBounds)
 plt.ylim(YBounds)
 
-plt.plot([0,0],YBounds, color='blue') # Y axis
-plt.plot(XBounds,[0,0], color='blue') # X axis
+plt.plot([0,0],YBounds, color='blue', linewidth=1) # Y axis
+plt.plot(XBounds,[0,0], color='blue', linewidth=1) # X axis
 
 plt.show()
