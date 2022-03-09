@@ -38,7 +38,7 @@ for i in range(D[2]):
     plt.plot(MasterXY.x[i],MasterXY.y[i], color='grey')
 
 if input("Would you like an Euler approximation? (y/n) ").lower() == 'y':
-    X, Y = Approximater()
+    X,Y = Approximater()
     if max(X) > XMax or min(X) < XMin:
         print("X out of bounds")
     elif max(Y) > YMax or min(Y) < YMin:
