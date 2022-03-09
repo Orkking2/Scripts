@@ -1,13 +1,10 @@
+from Display import m
+
 def questions ():
     X = [int(input("Start X: "))] ## Initial X -> inc'd X
     Y = [int(input("Start Y: "))] ## Initial Y -> inc'd Y
     TargetX = int(input("Target X: "))
     return(X,Y,TargetX)
-
-## k = dy/dx
-def m (x,y):
-    k = y
-    return(k)
 
 def Choose (TargetX,X):
     NHChoise = input("N/H: ")

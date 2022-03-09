@@ -2,6 +2,11 @@ from Approximater import *
 from Matrix import *
 import matplotlib.pyplot as plt
 
+
+def m (x,y):
+    k = x*(1-y)
+    return(k)
+
 YMax = 2
 YMin = -2
 XMax = 2
@@ -29,13 +34,17 @@ plt.figure(figsize=(8,8), facecolor='grey')
 plt.rcParams.update({'axes.facecolor':'black'})
 plt.subplots_adjust(left=0.04,bottom=0.04,right=0.99,top=0.99)
 
-
 for i in range(D[2]):
     plt.plot(MasterXY.x[i],MasterXY.y[i], color='grey')
 
 if input("Would you like an Euler approximation? (y/n) ").lower() == 'y':
     X, Y = Approximater()
-    plt.plot(X,Y)
+    if max(X) > XMax or min(X) < XMin:
+        print("X out of bounds")
+    elif max(Y) > YMax or min(Y) < YMin:
+        print("Y out of bounds")
+    plt.plot(X,Y, color='green', linewidth=2.5)
+    print("Final Y is " + str(Y[len(Y)]))
 else:
     pass
 
@@ -58,5 +67,9 @@ XBounds = [min([MatrixXY.x[i] - k[i] for i in range(D[2])]) - Kx, max([MatrixXY.
 
 plt.xlim(XBounds)
 plt.ylim(YBounds)
+
+plt.plot([0,0],YBounds, color='blue')
+plt.plot(XBounds,[0,0], color='blue')
+print("Blue lines are the X and Y axes!")
 
 plt.show()

@@ -9,13 +9,6 @@ class Matrix:
         self.x = XComponent
         self.y = YComponent
 
-YMax = 1
-YMin = -1
-XMax = 1
-XMin = -1
-
-D = [2,3] # x, y
-
 def Matrix_Generator (XMax,XMin,YMax,YMin,D):
     XDist = XMax - XMin
     YDist = YMax - YMin
@@ -41,4 +34,3 @@ def Matrix_Generator (XMax,XMin,YMax,YMin,D):
     MatrixXY = Matrix(XList,YList)
 
     return(MatrixXY)
-
