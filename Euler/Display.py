@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 
 def m (x,y):
-    k = x*(1-y)
+    k = y
     return(k)
 
 YMax = 2
@@ -68,8 +68,7 @@ XBounds = [min([MatrixXY.x[i] - k[i] for i in range(D[2])]) - Kx, max([MatrixXY.
 plt.xlim(XBounds)
 plt.ylim(YBounds)
 
-plt.plot([0,0],YBounds, color='blue')
-plt.plot(XBounds,[0,0], color='blue')
-print("Blue lines are the X and Y axes!")
+plt.plot([0,0],YBounds, color='blue') # Y axis
+plt.plot(XBounds,[0,0], color='blue') # X axis
 
 plt.show()
