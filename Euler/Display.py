@@ -19,7 +19,8 @@ MasterX = []
 MasterY = []
 
 for i in range(D[2]):
-    MasterX.append()
+    MasterX.append([MatrixXY.x[i] - k[i], MatrixXY.x[i] + k[i]])
+    MasterY.append([MatrixXY.y[i] - m(MatrixXY.x[i],MatrixXY.y[i])*k[i], MatrixXY.y[i] + m(MatrixXY.x[i],MatrixXY.y[i])*k[i]])
 
 MasterXY = Matrix(MasterX,MasterY)
 
