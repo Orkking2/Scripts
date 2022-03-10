@@ -13,7 +13,7 @@ def Choose (TargetX,X):
     if NHChoise.lower() == 'n':
         N = int(input("N: "))
         if N > 1000000:
-            print("N > 1,000,000, reset to 1,000,000")
+            print("N > 1 million, reset to 1000000")
             N = 1000000
         H = (TargetX-X)/N
         return(N,H)
@@ -21,7 +21,7 @@ def Choose (TargetX,X):
         H = int(input("H: "))
         N = (TargetX-X)/H
         if N > 1000000:
-            print("N > 1,000,000, reset to 1,000,000")
+            print("N > million, reset to 1000000")
             N = 1000000
             H = (TargetX-X)/N
         return(N,H)
