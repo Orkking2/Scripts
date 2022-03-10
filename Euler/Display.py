@@ -35,9 +35,6 @@ plt.rcParams.update({'axes.facecolor':'black'})
 border = max(len(str(YMax)), len(str(YMin)))/100 + 0.03
 plt.subplots_adjust(left=border,bottom=border,right=0.99,top=0.99)
 
-
-
-
 for i in range(D[2]):
     plt.plot(MasterXY.x[i],MasterXY.y[i], color='grey')
 
