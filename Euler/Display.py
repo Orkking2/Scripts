@@ -1,6 +1,7 @@
 from Approximater import *
 from Matrix import *
 import matplotlib.pyplot as plt
+import time
 
 def display_size ():
     # print('What dimensions would you like?')
@@ -48,7 +49,7 @@ if input("Would you like an Euler approximation? (y/n) ").lower() == 'y':
         print("Y out of bounds")
     plt.plot(X,Y, color='green', linewidth=2.5)
     print("Final Y is " + str(Y[len(Y) - 1]))
-    time.sleep(5)
+    time.sleep(1.75)
 
 Kx = (XMax - XMin)/(6*D[0])
 Ky = (YMax - YMin)/(6*D[1])
