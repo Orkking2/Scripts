@@ -48,8 +48,7 @@ if input("Would you like an Euler approximation? (y/n) ").lower() == 'y':
         print("Y out of bounds")
     plt.plot(X,Y, color='green', linewidth=2.5)
     print("Final Y is " + str(Y[len(Y) - 1]))
-else:
-    pass
+    time.sleep(5)
 
 Kx = (XMax - XMin)/(6*D[0])
 Ky = (YMax - YMin)/(6*D[1])

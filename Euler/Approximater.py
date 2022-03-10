@@ -1,3 +1,5 @@
+import time
+
 def questions ():
     X = [int(input("Start X: "))] ## Initial X -> inc'd X
     Y = [int(input("Start Y: "))] ## Initial Y -> inc'd Y
@@ -14,6 +16,7 @@ def Choose (TargetX,X):
         N = int(input("N: "))
         if N > 1000000:
             print("N > 1 million, reset to 1000000")
+            time.sleep(5)
             N = 1000000
         H = (TargetX-X)/N
         return(N,H)
@@ -22,6 +25,7 @@ def Choose (TargetX,X):
         N = (TargetX-X)/H
         if N > 1000000:
             print("N > million, reset to 1000000")
+            time.sleep(5)
             N = 1000000
             H = (TargetX-X)/N
         return(N,H)
