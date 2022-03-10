@@ -12,7 +12,7 @@ def display_size ():
 
 YMax, YMin, XMax, XMin = display_size()
 
-D = [50,50] # x, y
+D = [75,75] # x, y
 D.append(D[0]*D[1]) 
 
 MatrixXY = Matrix_Generator(XMin,XMax,YMax,YMin,D)
