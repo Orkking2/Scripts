@@ -15,7 +15,8 @@ YMax, YMin, XMax, XMin = display_size()
 D = [75,75] # x, y
 D.append(D[0]*D[1]) 
 
-MatrixXY = Matrix_Generator(XMin,XMax,YMax,YMin,D)
+MatrixXY = Matrix()
+Matrix.Generate(MatrixXY,XMin,XMax,YMax,YMin,D)
 
 r = min((XMax-XMin)/(2*(D[0]-1)),(YMax-YMin)/(2*(D[1]-1)))*0.9
 
@@ -28,7 +29,8 @@ for i in range(D[2]):
     MasterX.append([MatrixXY.x[i] - k[i], MatrixXY.x[i] + k[i]])
     MasterY.append([MatrixXY.y[i] - m(MatrixXY.x[i],MatrixXY.y[i])*k[i], MatrixXY.y[i] + m(MatrixXY.x[i],MatrixXY.y[i])*k[i]])
 
-MasterXY = Matrix(MasterX,MasterY)
+MasterXY = Matrix()
+Matrix.Point(MasterXY,MasterX,MasterY)
 
 plt.figure(figsize=(7,7), facecolor='grey')
 plt.rcParams.update({'axes.facecolor':'black'})

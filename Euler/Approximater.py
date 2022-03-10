@@ -12,11 +12,18 @@ def Choose (TargetX,X):
     NHChoise = input("N/H: ")
     if NHChoise.lower() == 'n':
         N = int(input("N: "))
+        if N > 1000000:
+            print("N > 1,000,000, reset to 1,000,000")
+            N = 1000000
         H = (TargetX-X)/N
         return(N,H)
     elif NHChoise.lower() == 'h':
         H = int(input("H: "))
         N = (TargetX-X)/H
+        if N > 1000000:
+            print("N > 1,000,000, reset to 1,000,000")
+            N = 1000000
+            H = (TargetX-X)/N
         return(N,H)
     else:
         print("\n"+"Print please pick N or H"+"\n")

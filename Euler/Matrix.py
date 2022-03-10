@@ -1,3 +1,6 @@
+from ast import YieldFrom
+
+
 def floor (num):
     if round(num) <= num:
         return(round(num))
@@ -5,34 +8,34 @@ def floor (num):
         return(round(num)-1)
 
 class Matrix:
-    def __init__(self,XComponent,YComponent):
+    def __init__(self):
+        pass
+    def Point(self,YComponent,XComponent):
         self.x = XComponent
         self.y = YComponent
+    def Generate (self,XMax,XMin,YMax,YMin,D):
+        XDist = XMax - XMin
+        YDist = YMax - YMin
 
-def Matrix_Generator (XMax,XMin,YMax,YMin,D):
-    XDist = XMax - XMin
-    YDist = YMax - YMin
+        D = [D[0],D[1],D[0]*D[1]]
 
-    D = [D[0],D[1],D[0]*D[1]]
+        XSpacing = XDist/(D[0]-1)
+        YSpacing = YDist/(D[1]-1)
 
-    XSpacing = XDist/(D[0]-1)
-    YSpacing = YDist/(D[1]-1)
+        MatrixX = []
+        MatrixY = []
 
-    MatrixX = []
-    MatrixY = []
+        for i in range(D[0]):
+            MatrixX.append(i*XSpacing + XMin)
+        for i in range(D[1]):
+            MatrixY.append(i*YSpacing + YMin)
 
-    for i in range(D[0]):
-        MatrixX.append(i*XSpacing + XMin)
-    for i in range(D[1]):
-        MatrixY.append(i*YSpacing + YMin)
+        XList = []
+        YList = []
 
-    XList = []
-    YList = []
+        for i in range(D[2]):
+            XList.append(MatrixX[i % D[0]])
+            YList.append(MatrixY[floor(i/D[0])])
 
-    for i in range(1,D[2]+1):
-        XList.append(MatrixX[(i - 1) % D[0]])
-        YList.append(MatrixY[floor((i - 1)/D[0])])
-
-    MatrixXY = Matrix(XList,YList)
-
-    return(MatrixXY)
+        self.x = XList
+        self.y = YList
