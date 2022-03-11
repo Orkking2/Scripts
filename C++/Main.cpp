@@ -4,27 +4,44 @@
 #include <math.h>
 
 struct Point{
+    Point(): x(0),y(0){
+
+    }
     Point(double XComponent, double YComponent){
         x = XComponent;
         y = YComponent;
     }
     double x;
     double y;
+    friend std::ostream& operator << (std::ostream& os, const Point& p);
+    Point operator + (const Point& p){
+        Point p2;
+        p2.x = this->x + p.x;
+        p2.y = this->y + p.y;
+        return p2;
+    }
 };
+
+std::ostream& operator << (std::ostream& os, const Point& p){
+    os << "(" << p.x << ", " << p.y << ")" << std::endl;
+    return os;
+}
 
 class Matrix{
     public:
         Matrix(Point pMin, Point pMax, std::vector<int> dimensions){
-            xDist = pMax.x - pMin.y;
-            yDist = pMax.y - pMin.y;
+            double xDist = pMax.x - pMin.y;
+            double yDist = pMax.y - pMin.y;
     
             int d[3] = {dimensions[0], dimensions[1], dimensions[0]*dimensions[1]};
 
-            xSpacing = xDist/(d[0]-1);
-            ySpacing = yDist/(d[1]-1);
+            double xSpacing = xDist/(d[0]-1);
+            double ySpacing = yDist/(d[1]-1);
 
-            
-
+            std::vector<double> matrixX;
+            std::vector<double> matrixY;
+            std::vector<double> xList;
+            std::vector<double> yList;
 
             for(int i = 0; i < d[0]; i++){
                 matrixX.push_back(i*xSpacing + pMin.x); 
@@ -37,42 +54,28 @@ class Matrix{
                 yList.push_back(matrixY[floor(i/d[0])]);
             }
             
-            data.reserve(d[2]);
+            data_.resize(d[2]);
             
             for(int i = 0; i < d[2]; i++){
-                data[i].reserve(2);
-                for(int j = 0; j < 2; j++){
-                    if(j == 0){
-                        data[i][j] = xList[i];
-                    } else {
-                        data[i][j] = yList[i];
-                    }
-                }
+                data_.emplace_back(Point(xList[i],yList[i]));
             }
         }
-        const std::vector <std::vector<double>>& getMatrix(){
-            return data;
+        const std::vector <Point>& getMatrix(){
+            return data_;
         }
     private:
-        std::vector<double> matrixX;
-        std::vector<double> matrixY;
-        double xDist;
-        double yDist;
-        double xSpacing;
-        double ySpacing;
-        std::vector<double> xList;
-        std::vector<double> yList;
-        std::vector <std::vector<double>> data;
+        std::vector <Point> data_;
 };
 
 int main()
 {
-    std::cout << "test";
-    Matrix m(Point (-10,-10), Point (10,10), {5,5});
+    /*Matrix m(Point (-10,-10), Point (10,10), {21,21});
     auto& d = m.getMatrix();
     for(auto& out : d){
-        std::cout << out[0] << std::endl;
-        std::cout << out[1] << std::endl;
-    }
+        std::cout << out;
+    }*/
+    Point p1(1,4);
+    Point p2(2,3);
+    std::cout << (p1 + p2);
     return 0;   
 }
