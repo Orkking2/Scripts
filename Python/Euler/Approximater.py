@@ -7,7 +7,7 @@ def questions ():
 def m (x,y):
     k = x**2 + y**2 -2*x*y - 3
     return(k)
-
+    
 def Choose (TargetX,X):
     NHChoise = input("N/H: ")
     if NHChoise.lower() == 'n':

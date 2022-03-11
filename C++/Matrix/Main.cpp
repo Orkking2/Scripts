@@ -9,6 +9,10 @@ struct Point{
         x = XComponent;
         y = YComponent;
     }
+    void setPoint(double xComponent, double yComponent){
+        x = xComponent;
+        y = yComponent;
+    }
     double x;
     double y;
     friend std::ostream& operator << (std::ostream& os, const Point& p);
@@ -69,33 +73,19 @@ double m(double x, double y){
     return (pow(x,2) + pow(y,2) - 2*x*y - 3);  // x**2 + y**2 - 2*x*y - 3
 }
 
-std::vector<std::vector<double>> StartSelect(){
+Point StartSelect(){
     double startX;
     double startY;
-    double targetX;
     // questions
     std::cout << "Start X: ";
     std::cin >> startX;
     std::cout << std::endl << "Start Y: ";
     std::cin >> startY;
-    std::cout << std::endl << "Target X: ";
-    std::cin >> targetX;
-    // vector assignment
-    std::vector<double> outX;
-    std::vector<double> outY;
-    std::vector<double> target;
-    // pushing vectors
-    outX.push_back(startX);
-    outY.push_back(startY);
-    target.push_back(targetX);
-    // constructing out_
-    std::vector<std::vector<double>> out_;
-    out_.push_back(outX);
-    out_.push_back(outY);
-    out_.push_back(target);
+    Point startPoint(startX,startY);
 
-    return out_;
+    return startPoint;
 }
+
 
 
 std::vector<double> NHSelect(double targetX, double x){
@@ -109,14 +99,19 @@ std::vector<double> NHSelect(double targetX, double x){
         std::cout << "N: ";
         std::cin >> n;
         if(n > 1000000){
-            std::cout << "N > 1,000,000 -- reset to 1000000";
+            std::cout << "N > 1,000,000 -- reset to 1000000 \n";
             n = 1000000;
         }
-        h = (targetX-x)/n; // H = (TargetX-X)/N
+        h = (targetX-x)/n;
     } else if(tolower(nhSelect) == 'h'){
         std::cout << "H: ";
         std::cin >> h;
         n = (targetX-x)/h;
+        if(n > 1000000){
+            std::cout << "N > 1,000,000 -- reset to 1000000 \n";
+            n = 1000000;
+            h = (targetX-x)/n;
+        }
     } else {
         std::cout << "Invalid char" << std::endl;
         out_ = NHSelect(targetX, x);
@@ -127,14 +122,27 @@ std::vector<double> NHSelect(double targetX, double x){
 }
 
 
-std::vector<Point> approximate(std::vector<double> X, std::vector<double> Y, double TargetX){
-    std::vector<double> K;
-    double N; double H;
+std::vector<Point> Approximate(/*Point startPoint*/){
+    Point startPoint = StartSelect();
+    std::vector<Point> point;
+    point.push_back(startPoint);
+
+    std::vector<double> k;
+    double n; double h;
+    double targetX;
+    std::cout << "Target X: ";
+    std::cin >> targetX;
+
+    std::vector<double> nh = NHSelect(targetX, startPoint.x);
+
     
 
-    if(N <= 0){
+    if(n <= 0){
         std::cout << "Divergent";
-    } 
+    }
+
+
+    return point;
 }
 
 int main()
