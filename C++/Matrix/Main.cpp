@@ -4,9 +4,7 @@
 #include <math.h>
 
 struct Point{
-    Point(): x(0),y(0){
-
-    }
+    Point(): x(0),y(0){}
     Point(double XComponent, double YComponent){
         x = XComponent;
         y = YComponent;
@@ -15,10 +13,10 @@ struct Point{
     double y;
     friend std::ostream& operator << (std::ostream& os, const Point& p);
     Point operator + (const Point& p){
-        Point p2;
-        p2.x = this->x + p.x;
-        p2.y = this->y + p.y;
-        return p2;
+        Point pSum;
+        pSum.x = this->x + p.x;
+        pSum.y = this->y + p.y;
+        return pSum;
     }
 };
 
@@ -66,6 +64,78 @@ class Matrix{
     private:
         std::vector <Point> data_;
 };
+
+double m(double x, double y){
+    return (pow(x,2) + pow(y,2) - 2*x*y - 3);  // x**2 + y**2 - 2*x*y - 3
+}
+
+std::vector<std::vector<double>> StartSelect(){
+    double startX;
+    double startY;
+    double targetX;
+    // questions
+    std::cout << "Start X: ";
+    std::cin >> startX;
+    std::cout << std::endl << "Start Y: ";
+    std::cin >> startY;
+    std::cout << std::endl << "Target X: ";
+    std::cin >> targetX;
+    // vector assignment
+    std::vector<double> outX;
+    std::vector<double> outY;
+    std::vector<double> target;
+    // pushing vectors
+    outX.push_back(startX);
+    outY.push_back(startY);
+    target.push_back(targetX);
+    // constructing out_
+    std::vector<std::vector<double>> out_;
+    out_.push_back(outX);
+    out_.push_back(outY);
+    out_.push_back(target);
+
+    return out_;
+}
+
+
+std::vector<double> NHSelect(double targetX, double x){
+    std::vector<double> out_;
+    std::cout << "N or H: (n/h) ";
+    char nhSelect;
+    double n;
+    double h;
+    std::cin >> nhSelect;
+    if(tolower(nhSelect) == 'n'){
+        std::cout << "N: ";
+        std::cin >> n;
+        if(n > 1000000){
+            std::cout << "N > 1,000,000 -- reset to 1000000";
+            n = 1000000;
+        }
+        h = (targetX-x)/n; // H = (TargetX-X)/N
+    } else if(tolower(nhSelect) == 'h'){
+        std::cout << "H: ";
+        std::cin >> h;
+        n = (targetX-x)/h;
+    } else {
+        std::cout << "Invalid char" << std::endl;
+        out_ = NHSelect(targetX, x);
+    }
+    out_.push_back(n);
+    out_.push_back(h);
+    return out_;
+}
+
+
+std::vector<Point> approximate(std::vector<double> X, std::vector<double> Y, double TargetX){
+    std::vector<double> K;
+    double N; double H;
+    
+
+    if(N <= 0){
+        std::cout << "Divergent";
+    } 
+}
 
 int main()
 {
