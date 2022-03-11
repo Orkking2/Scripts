@@ -69,11 +69,11 @@ class Matrix{
 
 int main()
 {
-    /*Matrix m(Point (-10,-10), Point (10,10), {21,21});
+/*  Matrix m(Point (-10,-10), Point (10,10), {21,21});
     auto& d = m.getMatrix();
     for(auto& out : d){
         std::cout << out;
-    }*/
+    }  */
     Point p1(1,4);
     Point p2(2,3);
     std::cout << (p1 + p2);
