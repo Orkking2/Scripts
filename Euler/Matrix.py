@@ -1,6 +1,3 @@
-from ast import YieldFrom
-
-
 def floor (num):
     if round(num) <= num:
         return(round(num))
@@ -37,5 +34,4 @@ class Matrix:
             XList.append(MatrixX[i % D[0]])
             YList.append(MatrixY[floor(i/D[0])])
 
-        self.x = XList
-        self.y = YList
+        Matrix.Point(self,XList,YList)
