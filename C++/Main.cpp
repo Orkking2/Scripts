@@ -47,8 +47,8 @@ class Matrix{
         double YSpacing;
         double XList[D[2]];
         double YList[D[2]];
-
 };
+
 class point{
     point(double XComponent, double YComponent){
         x = XComponent;
