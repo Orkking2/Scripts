@@ -4,12 +4,12 @@
 using namespace std;
 
 class Matrix{
-    public: 
-        Matrix(point PMin, point PMax, int D[2]){
+    public:
+        Matrix(point PMin, point PMax, int Dim[2]){
             XDist = PMax.x - PMin.y;
             YDist = PMax.y - PMin.y;
-            
-            D[3] = D[0]*D[1];
+        
+            D[3] = {Dim[0], Dim[1], Dim[0]*Dim[1]};
 
             XSpacing = XDist/(D[0]-1);
             YSpacing = YDist/(D[1]-1);
@@ -25,9 +25,20 @@ class Matrix{
                 YList[i] = MatrixY[floor(i/D[0])];
             }
             
+            double Matrix[D[2]][2];
             
+            for(int i = 0; i < D[2]; i++){
+                for(int j = 0; j < 2; j++){
+                    if(j == 0){
+                        Matrix[i][j] = XList[i];
+                    } else {
+                        Matrix[i][j] = YList[i];
+                    }
+                }
+            }
         };
     private:
+        int D[3];
         double MatrixX[D[0]];
         double MatrixY[D[1]];
         double XDist;
