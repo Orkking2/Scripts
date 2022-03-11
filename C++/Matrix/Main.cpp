@@ -101,6 +101,9 @@ std::vector<double> NHSelect(double targetX, double x){
         if(n > 1000000){
             std::cout << "N > 1,000,000 -- reset to 1000000 \n";
             n = 1000000;
+        } else if(n <= 0){
+            std::cout << "N <= 0, reset to 1000000";
+            n = 1000000;
         }
         h = (targetX-x)/n;
     } else if(tolower(nhSelect) == 'h'){
@@ -111,6 +114,9 @@ std::vector<double> NHSelect(double targetX, double x){
             std::cout << "N > 1,000,000 -- reset to 1000000 \n";
             n = 1000000;
             h = (targetX-x)/n;
+        } else if(n <= 0){
+            std::cout << "N <= 0, reset to 1000000";
+            n = 1000000;
         }
     } else {
         std::cout << "Invalid char" << std::endl;
@@ -124,23 +130,20 @@ std::vector<double> NHSelect(double targetX, double x){
 
 std::vector<Point> Approximate(/*Point startPoint*/){
     Point startPoint = StartSelect();
-    std::vector<Point> point;
-    point.push_back(startPoint);
+    std::vector<Point> point = {startPoint};
 
     std::vector<double> k;
-    double n; double h;
     double targetX;
     std::cout << "Target X: ";
     std::cin >> targetX;
 
     std::vector<double> nh = NHSelect(targetX, startPoint.x);
+    int n = (int)nh[0];
+    double h = nh[1];
 
-    
-
-    if(n <= 0){
-        std::cout << "Divergent";
+    for(int i = 0; i < n; i++){
+        point.push_back(Point (point[i].x + h, point[i].y + m(point[i].x,point[i].y)*h));
     }
-
 
     return point;
 }
@@ -152,8 +155,11 @@ int main()
     for(auto& out : d){
         std::cout << out;
     }  */
-    Point p1(1,4);
-    Point p2(2,3);
-    std::cout << (p1 + p2);
+    
+    auto disp = Approximate();
+    for(auto out : disp){
+        std::cout << out;
+    }
+
     return 0;   
 }
