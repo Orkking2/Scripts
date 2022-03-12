@@ -160,7 +160,7 @@ class SlopeField : public Matrix{
 
             }
 
-            // Constructing bounds
+            // Constructing bounds list
             bounds.push_back(pLow.value());
             bounds.push_back(pHigh.value());
         }
