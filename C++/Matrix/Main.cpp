@@ -171,51 +171,63 @@ class SlopeField : public Matrix{
 };
 
 
-Point StartSelect(){
+std::vector <double> StartSelect(){
     double startX;
     double startY;
+    double targetX;
     // questions
     std::cout << "Start X: ";
     std::cin >> startX;
     std::cout << "Start Y: ";
     std::cin >> startY;
-    Point startPoint(startX,startY);
+    std::cout << "Target X: ";
+    std::cin >> targetX;
+    std::vector <double> out = {startX, startY, targetX};
 
-    return startPoint;
+    return out;
 }
 
 
 
 std::vector<double> NHSelect(double targetX, double x){
     std::vector<double> out;
-    std::cout << "N or H: (n/h) ";
+    std::cout << "N or H: ";
     char nhSelect;
+    std::cin >> nhSelect;
     double n;
     double h;
-    std::cin >> nhSelect;
+    double nCap = 10000000;
     if(tolower(nhSelect) == 'n'){
         std::cout << "N: ";
         std::cin >> n;
-        if(n > 1000000){
-            std::cout << "N > 1,000,000 -- reset to 1000000 \n";
-            n = 1000000;
+        if(n > nCap){
+            std::cout << "N > " << nCap << " -- reset to " << nCap << std::endl;
+            n = nCap;
         } else if(n <= 0){
-            std::cout << "N <= 0, reset to 1000000";
-            n = 1000000;
+            std::cout << "N <= 0, reset to " << nCap << std::endl;
+            n = nCap;
         }
         h = (targetX-x)/n;
+        std::cout << "H = " << h << std::endl;
     } else if(tolower(nhSelect) == 'h'){
         std::cout << "H: ";
         std::cin >> h;
         n = (targetX-x)/h;
-        if(n > 1000000){
-            std::cout << "N > 1,000,000 -- reset to 1000000 \n";
-            n = 1000000;
+        if(n > nCap){
+            std::cout << "N > " << nCap << " -- reset to " << nCap << std::endl;
+            n = nCap;
             h = (targetX-x)/n;
+            std::cout << "H = " << h << std::endl;
         } else if(n <= 0){
-            std::cout << "N <= 0, reset to 1000000";
-            n = 1000000;
+            std::cout << "N <= 0, reset to " << nCap << std::endl;
+            n = nCap;
+            h = (targetX-x)/n;
+            std::cout << "H = " << h << std::endl;            
         }
+    } else if(nhSelect == 'm'){
+        n = nCap;
+        h = (targetX-x)/n;
+        std::cout << "Max N selected, N set to " << nCap << std::endl << "H set to " << h << std::endl;
     } else {
         std::cout << "Invalid char" << std::endl;
         out = NHSelect(targetX, x);
@@ -226,14 +238,12 @@ std::vector<double> NHSelect(double targetX, double x){
 }
 
 
-std::vector<Point> Approximate(/*Point startPoint*/){
-    Point startPoint = StartSelect();
+std::vector<Point> Approximate(std::vector <double> in){
+    Point startPoint (in[0],in[1]);
     std::vector<Point> pointList = {startPoint};
 
     std::vector<double> k;
-    double targetX;
-    std::cout << "Target X: ";
-    std::cin >> targetX;
+    double targetX = in[2];
 
     std::vector<double> nh = NHSelect(targetX, startPoint.x);
     int n = (int)nh[0];
@@ -249,15 +259,8 @@ std::vector<Point> Approximate(/*Point startPoint*/){
 
 int main()
 {
-/*  
-    Matrix m(Point (-10,-10), Point (10,10), {21,21});
-    auto& d = m.getMatrix();
-    for(auto& out : d){
-        std::cout << out;
-    }  
-*/
+    std::vector <Point> pL = Approximate(StartSelect());
+    std::cout << pL[pL.size() - 1];
     
-    
-
     return 0;   
 }
