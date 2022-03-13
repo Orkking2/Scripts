@@ -5,36 +5,24 @@
 #include <algorithm>
 #include <optional>
 
+#include "Main.h"
+
+#include <Python.h>
+
 double slope(double x, double y){
     return (pow(x,2) + pow(y,2) - 2*x*y - 3);  // x^2 + y^2 - 2xy - 3
 }
 
-struct Point{
-    Point(): x(0),y(0){}
-    Point(double XComponent, double YComponent){
-        x = XComponent;
-        y = YComponent;
-    }    
-    double x;
-    double y;
-
-    friend std::ostream& operator << (std::ostream& os, const Point& p);
-    friend bool operator < (const Point& l, const Point& r);
-
-    Point operator + (const Point& p){
-        Point pSum;
-        pSum.x = this->x + p.x;
-        pSum.y = this->y + p.y;
-        return pSum;
-    }
-};
+bool Point::inRadius(Point p, double r){
+    return sqrt(pow(p.x - this->x, 2) + pow(p.y - this->y, 2)) <= r;
+}
 
 bool operator < (const Point& l, const Point& r){
     return l.x < r.x && l.y < r.y;
 }
 
 std::ostream& operator << (std::ostream& os, const Point& p){
-    os << "(" << p.x << ", " << p.y << ")" << std::endl;
+    os << "(" << p.x << ", " << p.y << ")";
     return os;
 }
 
@@ -170,7 +158,6 @@ class SlopeField : public Matrix{
         std::vector <Point> bounds;
 };
 
-
 std::vector <double> StartSelect(){
     double startX;
     double startY;
@@ -187,51 +174,50 @@ std::vector <double> StartSelect(){
     return out;
 }
 
-
-
 std::vector<double> NHSelect(double targetX, double x){
     std::vector<double> out;
     std::cout << "N or H: ";
     char nhSelect;
     std::cin >> nhSelect;
-    double n;
+    int n;
     double h;
     double nCap = 10000000;
     if(tolower(nhSelect) == 'n'){
         std::cout << "N: ";
         std::cin >> n;
         if(n > nCap){
-            std::cout << "N > " << nCap << " -- reset to " << nCap << std::endl;
+            std::cout << "N > " << nCap << " -- N reset to " << nCap << std::endl;
             n = nCap;
         } else if(n <= 0){
             std::cout << "N <= 0, reset to " << nCap << std::endl;
             n = nCap;
         }
-        h = (targetX-x)/n;
+        h = (targetX-x)/static_cast<double>(n);
         std::cout << "H = " << h << std::endl;
     } else if(tolower(nhSelect) == 'h'){
         std::cout << "H: ";
         std::cin >> h;
         n = (targetX-x)/h;
         if(n > nCap){
-            std::cout << "N > " << nCap << " -- reset to " << nCap << std::endl;
+            std::cout << "N > " << nCap << " -- N reset to " << nCap << std::endl;
             n = nCap;
-            h = (targetX-x)/n;
+            h = (targetX-x)/static_cast<double>(n);
             std::cout << "H = " << h << std::endl;
         } else if(n <= 0){
             std::cout << "N <= 0, reset to " << nCap << std::endl;
             n = nCap;
-            h = (targetX-x)/n;
+            h = (targetX-x)/static_cast<double>(n);
             std::cout << "H = " << h << std::endl;            
         }
     } else if(nhSelect == 'm'){
-        n = nCap;
-        h = (targetX-x)/n;
-        std::cout << "Max N selected, N set to " << nCap << std::endl << "H set to " << h << std::endl;
+        n = pow(10, 8);
+        h = (targetX-x)/static_cast<double>(n);
+        std::cout << std::endl << "Max N selected " << std::endl << "N = " << n << std::endl << "H = " << h << std::endl;
     } else {
         std::cout << "Invalid char" << std::endl;
         out = NHSelect(targetX, x);
     }
+    std::cout << std::endl;
     out.push_back(n);
     out.push_back(h);
     return out;
@@ -241,17 +227,31 @@ std::vector<double> NHSelect(double targetX, double x){
 std::vector<Point> Approximate(std::vector <double> in){
     Point startPoint (in[0],in[1]);
     std::vector<Point> pointList = {startPoint};
+    Point iterativePoint = startPoint;
 
     std::vector<double> k;
     double targetX = in[2];
+    double xDist = abs(targetX - startPoint.x);
+    double tRadius = xDist/5000;
 
     std::vector<double> nh = NHSelect(targetX, startPoint.x);
     int n = (int)nh[0];
     double h = nh[1];
 
+    int j = 0;
+
     for(int i = 0; i < n; i++){
-        pointList.push_back(Point (pointList[i].x + h, pointList[i].y + slope(pointList[i].x,pointList[i].y)*h));
+        iterativePoint += Point(h, slope(iterativePoint.x,iterativePoint.y)*h);
+        if(!pointList[j].inRadius(iterativePoint, tRadius)){
+            pointList.push_back(iterativePoint);
+            j++;
+        }
     }
+
+    if(pointList[pointList.size()-1] != iterativePoint){
+        pointList.push_back(iterativePoint);
+    }
+
     return pointList;
 }
 
@@ -260,7 +260,7 @@ std::vector<Point> Approximate(std::vector <double> in){
 int main()
 {
     std::vector <Point> pL = Approximate(StartSelect());
-    std::cout << pL[pL.size() - 1];
+    std::cout << "Final point " << pL[pL.size() - 1];
     
-    return 0;   
+    return 0;
 }
